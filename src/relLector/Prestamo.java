@@ -1,4 +1,7 @@
+package relLector;
 import java.util.Date;
+
+import relLibro.Copia;
 
 public class Prestamo {
 	//La clase Prestamo solo recibe un elemento de la clase Copia, puesto a que está dentro de una "lista de préstamos" en la clase Lector, de modo que se puede consultar esta lista de préstamos accediendo a una función de Lector.
@@ -8,8 +11,8 @@ public class Prestamo {
 	
 	//Constructor
 	public Prestamo(Copia _copia) {
-		copia = _copia;
-		fechaPrestamo = new Date();
+		this.copia = _copia;
+		this.fechaPrestamo = new Date();
 	}
 	
 	//Getters

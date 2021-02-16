@@ -1,18 +1,23 @@
+package relLector;
 import java.util.ArrayList;
 import java.util.List;
 
+import relLibro.Copia;
+import relLibro.Libro;
+import relLector.Prestamo;
+
 public class Lector {
 	//Defino la clase Lector para definir a los lectores, almacenandolos en el sistema simplemente escribiendo su nombre y generando una id personalizada, el id personalmente no es necesario para las implementaciones del sistema, pero puede traer utilidades a futuras modificaciones, como buscar un Lector por id en una base de datos o una búsqueda del nombre por id.
-	String nombre;
-	int id;
-	boolean multado = false;
-	static int aumentador = 0;
-	private List<Prestamo> prestamos = new ArrayList();
+	private String nombre;
+	private int id;
+	private boolean multado = false;
+	private static int aumentador = 0;
+	private List<Prestamo> prestamos = new ArrayList<Prestamo>();
 	
 	//Constructor
 	public Lector(String _nombre) {
-		nombre = _nombre;
-		id = aumentador;
+		this.nombre = _nombre;
+		this.id = aumentador;
 		aumentador++;
 	}
 	
@@ -45,17 +50,41 @@ public class Lector {
 		return prestamos;
 	}
 	
-	public void devolverLibro(int _indice) {
+	public void devuelveLibro(int _indice) {
 		prestamos.remove(_indice);
 	}
 	
-	public void multar() {
-		multado = true;
+	protected void multar() {
+		this.multado = true;
 	}
 	
-	public void sacarMulta() {
-		multado = false;
+	protected void sacarMulta() {
+		this.multado = false;
 	}
 	
-
+	public Prestamo getPrestamoLibro(Libro _libro) {
+		for (int i = 0; i < this.prestamos.size();i++) {
+			if (prestamos.get(i).getCopia().getLibroPerteneciente() == _libro) {
+				return prestamos.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public boolean libroPrestado(Libro _libro) {
+		for (int i = 0; i < this.prestamos.size();i++) {
+			if (prestamos.get(i).getCopia().getLibroPerteneciente() == _libro) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public List<Copia> getListaCopiasPrestadas(){
+		List<Copia> listaCopias = new ArrayList<Copia>();
+		for (int i = 0; i < this.prestamos.size();i++) {
+			listaCopias.add(prestamos.get(i).getCopia());
+		}
+		return listaCopias;
+	}
 }
