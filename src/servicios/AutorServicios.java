@@ -1,18 +1,33 @@
 package servicios;
+import java.util.ArrayList;
+
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
+import jakarta.jws.WebService;
 import persistencia.AutorDAO;
 import relLibro.Autor;
 
+@WebService 
 public class AutorServicios {
-	public boolean agregarAutor(Autor a) {
+	
+	@WebMethod(operationName = "agregarAutorWS")
+	public void agregarAutor(@WebParam(name = "Autor") Autor a) {
 		AutorDAO dao = new AutorDAO();
-		
 		try {
 			dao.agregarAutor(a);
 		}catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			e.printStackTrace();;
 		}
-		return true;
-		
+	}
+	
+	@WebMethod(operationName = "consultarAutoresWS")
+	public ArrayList<Autor> mostrarAutores() {
+		ArrayList<Autor> autores = new ArrayList<Autor>();
+		try {
+			autores = mostrarAutores();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return autores;	
 	}
 }
