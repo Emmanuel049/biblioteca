@@ -94,10 +94,13 @@ public class Biblioteca {
 	public void devolverLibro(Copia _copia, Lector _lector) throws CopiaLibroException, CopiaIncorrectaException {
 		//Con devolver libro tengo un algoritmo algo más complejo, tuve una larga investigación sobre el método "Date" y determiné que puedo "dividir" por "86400000" cada valor resultante del módulo .getTime() para tener una cantidad real de días resultantes a dicha fecha, este cálculo determina la resta entre el día actual y el día de entrega, si el resultado es mayor a 30, se toma la diferencia y se envía como diasPasados a la clase Multa para hacer un cálculo del día en el que recién podrá sacarse la booleana multado dentro de la clase Lector.
 		List<Prestamo> listaPrestamos = _lector.mostrarListaPrestamos();
+		boolean estaCopia = false;
 		for (int i = 0; i < listaPrestamos.size(); i++) {
 			//Este "i" me es útil más abajo para determinar la posición de la lista de préstamos donde está la copia que quiero "devolver" para eliminar el objeto de la lísta en dicha posición.
 			Prestamo campo = listaPrestamos.get(i);
+			
 			if (campo.getCopia() == _copia) {
+				estaCopia = true;
 				int milisecondsByDay = 86400000;
 				Date fechaActual = new Date();
 				int diasPasados = (int) (fechaActual.getTime()/milisecondsByDay - campo.getFecha().getTime()/milisecondsByDay);
@@ -119,9 +122,9 @@ public class Biblioteca {
 				_copia.cambiarEstado("en la biblioteca");
 				_copia.getLibroPerteneciente().enlistarDisponible(_copia);
  			}
-			else {
-				
-			}
+		}
+		if (!estaCopia) {
+			throw new CopiaLibroException("La copia ingresada no fué prestada al lector.");
 		}
 	}
 	
@@ -130,7 +133,7 @@ public class Biblioteca {
 		for (int i = 0; i < listaMultas.size(); i++) {
 			Multa campo = listaMultas.get(i);
 			if (campo.getLector() == _lector) {
-				if (new Date().getTime()>campo.getfinalMulta().getTime()) {
+				if (new Date().getTime()>campo.getFinalMulta().getTime()) {
 					campo.deshacerMulta();
 					listaMultas.remove(i);
 					break;
@@ -145,6 +148,7 @@ public class Biblioteca {
 			Libro libro = libros.get(i);
 			System.out.println("Del libro: "+libro.getNombre()+" hay: "+libro.enumerarDisponibles()+" copias disponibles, y: "+libro.enumerarCopias()+" copias totales.");
 		}
+		System.out.println();
 	}
 	
 	public List<Libro> devolverListaLibros(){

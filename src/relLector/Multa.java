@@ -11,18 +11,18 @@ public class Multa {
 	//Constructor
 	public Multa (Lector _lector,int _diasAtraso) {
 		this.lector = _lector;
-		Date fechaFinal = new Date(fechaMulta.getDay(),fechaMulta.getMonth(),fechaMulta.getDate()+(_diasAtraso*2));
+		Date fechaFinal = new Date(fechaMulta.getYear(),fechaMulta.getMonth(),fechaMulta.getDate()+(_diasAtraso*2));
 		finalMulta = new Date(fechaFinal.getYear(),fechaFinal.getMonth(),fechaFinal.getDate());
 		_lector.multar();
 		System.out.println("Multa establecida: El lector: "+this.lector.getNombre()+" no podrá retirar libros hasta la fecha: "+fechaFinal.getDate()+"/"+fechaFinal.getMonth()+1+"/"+fechaFinal.getYear());
 	}
 	
 	//Getters
-	public Date getfechaMulta() {
+	public Date getFechaMulta() {
 		return fechaMulta;
 	}
 	
-	public Date getfinalMulta() {
+	public Date getFinalMulta() {
 		return finalMulta;
 	}
 	

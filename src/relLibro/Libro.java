@@ -100,4 +100,24 @@ public class Libro {
 		copiasDisponibles.remove(indice);
 		return removido;
 	}
+	
+	public boolean tieneCopia(Copia _copia) {
+		//Remueve un elemento Copia de la lista de copias totales del libro si existe el elemento en la lista, de lo contrario lanzará una excepción
+		if (copiasTotales.contains(_copia)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean tieneCopiaDisponible(Copia _copia) {
+		//Remueve un elemento Copia de la lista de copias totales del libro si existe el elemento en la lista, de lo contrario lanzará una excepción
+		if (copiasDisponibles.contains(_copia)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
